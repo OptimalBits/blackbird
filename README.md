@@ -25,7 +25,7 @@ Consider this code for requesting data from one endpoint to the other:
 Now compare it with this:
 
     // Endpoint A
-    blackbird.getName(function(name){
+    blackbird.getName(function(err, name){
       console.log(name);
     });
 
@@ -37,7 +37,7 @@ Now compare it with this:
 Or if you prefer promises over callback:
 
     // Endpoint A
-    blackbird.getName(function(name){
+    blackbird.getName().then(function(name){
       console.log(name);
     });
 
