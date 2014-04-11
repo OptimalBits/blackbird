@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Iframe example</title>
+</head>
+<body>
+  <iframe id="iframe" src="embedded.html"></iframe>
+  <div id="out"/>
+  <script src="../../lib/blackbird.js"></script>
+  <script>
+    var iframe = document.getElementById('iframe');
+
+    // Define transport
+    var transport = {
+      send: function(data){
+        iframe.contentWindow.postMessage(data, '*');
+      },
+      listen: function(fn){
+        window.addEventListener('message', function(e) {
+          fn(e.data);
+        });
+      }
+    };
+
+    // Inbound interface (will be called from remote)
+    var inbound = {
+      changeColor: function(color){
+        document.body.style.background = color;
+      }
+    };
+
+    // Outbound interface (will be proxied to remote end)
+    var outbound = {
+      getName: function(){ }
+    };
+
+    // Setup blackbird
+    blackbird(inbound, outbound, transport);
+
+    // Wait until everything is loaded
+    window.addEventListener('load', function(){
+      // Call getName on remote
+      outbound.getName(function(err, name){
+        document.getElementById('out').innerHTML = name;
+      });
+    });
+  </script>
+</body>
+</html>

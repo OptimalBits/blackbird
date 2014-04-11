@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Embedded</title>
+</head>
+<body>
+  <script src="../../lib/blackbird.js"></script>
+  <script>
+    // Define transport
+    var transport = {
+      send: function(data){
+        window.parent.postMessage(data, '*');
+      },
+      listen: function(fn){
+        window.addEventListener('message', function(e) {
+          fn(e.data);
+        });
+      }
+    };
+
+    var name = 'Paul';
+
+    // Inbound interface (will be called from remote)
+    var inbound = {
+      getName: function(){
+        return name;
+      }
+    };
+
+    // Outbound interface (will be proxied to remote end)
+    var outbound = {
+      changeColor: function(color){}
+    };
+
+    // Setup blackbird
+    blackbird(inbound, outbound, transport);
+
+    // Wait until everything is loaded
+    window.addEventListener('load', function(){
+      // Call changeColor on remote
+      outbound.changeColor('red');
+    });
+  </script>
+</body>
+</html>

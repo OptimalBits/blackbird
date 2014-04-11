@@ -1,0 +1,29 @@
+{
+  "name": "blackbird",
+  "version": "0.0.1",
+  "description": "Confortable interfacing of event based transports",
+  "main": "lib/blackbird.js",
+  "keywords": [
+    "event",
+    "api",
+    "proxy",
+    "websockets"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha test"
+  },
+  "author": "Aron Kornhall <aron@optimalbits.com> (http://optimalbits.com)",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "request": "~2.34.0",
+    "express": "~3.5.1",
+    "underscore": "~1.6.0",
+    "chai": "~1.9.1",
+    "mocha": "~1.18.2"
+  }
+}

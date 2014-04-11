@@ -1,0 +1,28 @@
+{
+  "name": "blackbird",
+  "version": "0.0.1",
+  "authors": [
+    "Aron Kornhall <aron@kornhall.se>"
+  ],
+  "description": "Confortable interfacing of event based transports",
+  "main": "lib/blackbird.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "event",
+    "api",
+    "proxy",
+    "iframe"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
