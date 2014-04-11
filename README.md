@@ -111,10 +111,13 @@ For a complete running example see `examples/iframe/index.html`
 
 ##Install
 Node
+
     npm install blackbird
 
 Browser
-    download blackbird.js and include it in a script tag or load it using AMD
+
+    bower install blackbird
+    or download blackbird.js
 
 ##Test
     npm test
