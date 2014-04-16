@@ -17,13 +17,13 @@
   },
   "author": "Aron Kornhall <aron@optimalbits.com> (http://optimalbits.com)",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "request": "~2.34.0",
     "express": "~3.5.1",
     "underscore": "~1.6.0",
     "chai": "~1.9.1",
-    "mocha": "~1.18.2"
+    "mocha": "~1.18.2",
+    "bluebird": "^1.2.2"
   }
 }
