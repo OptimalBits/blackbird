@@ -7,16 +7,7 @@
   <script src="../../lib/blackbird.js"></script>
   <script>
     // Define transport
-    var transport = {
-      send: function(data){
-        window.parent.postMessage(data, '*');
-      },
-      listen: function(fn){
-        window.addEventListener('message', function(e) {
-          fn(e.data);
-        });
-      }
-    };
+    var transport = blackbird.transports.iframe(window.parent);
 
     var name = 'Paul';
 

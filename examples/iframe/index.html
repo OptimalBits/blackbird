@@ -11,16 +11,7 @@
     var iframe = document.getElementById('iframe');
 
     // Define transport
-    var transport = {
-      send: function(data){
-        iframe.contentWindow.postMessage(data, '*');
-      },
-      listen: function(fn){
-        window.addEventListener('message', function(e) {
-          fn(e.data);
-        });
-      }
-    };
+    var transport = blackbird.transports.iframe(iframe.contentWindow);
 
     // Inbound interface (will be called from remote)
     var inbound = {
