@@ -1,12 +1,16 @@
 #Blackbird
 ![blackbird](doc/img/blackbird.png)
 
-Blackbird provides easy-to-use proxy objects that let you call methods across event
-based transports such as websockets, iframe postMessage etc. Any message based
-communication channel can be used so only your imagination sets the limit.
+Blackbird provides easy-to-use proxy objects that let you call methods
+across event based transports such as websockets, iframe postMessage channel
+etc. Instead of manually emitting and listening to events, blackbird lets
+you define interfaces that you can implement on one end point. On the
+other end point a proxy object is generated that you can call just as if
+it had been a local object. Any message based communication channel can
+be used so only your imagination sets the limit.
 
 ##Why?
-Consider this code for requesting data from one endpoint to the other:
+Without blackbird the code for requesting data from one endpoint to the other could look something like this:
 
     // Endpoint A
     var name;
@@ -22,31 +26,35 @@ Consider this code for requesting data from one endpoint to the other:
       window.postMessage('Paul', '*');
     });
 
-Now compare it with this:
+This is not very generic and very error prone.
+Now compare it with the following blackbird code:
 
     // Endpoint A
-    blackbird.getName(function(err, name){
+    outbound.getName(function(err, name){
       console.log(name);
     });
 
     // Endpoint B
-    blackbird.getName = function(){
+    inbound.getName = function(){
       return Paul;
     }
 
-Or if you prefer promises over callback:
+blackbird abstracts away the underlying messaging and lets you concentrate
+on your application logic instead. If you prefer promises over callback
+blackbird supports that too out of the box.
 
     // Endpoint A
-    blackbird.getName().then(function(name){
+    outbound.getName().then(function(name){
       console.log(name);
     });
 
     // Endpoint B
-    blackbird.getName = function(){
+    inbound.getName = function(){
       return Paul;
     }
 
-Blackbird can be used in node, in the browser per script tag and as an AMD module.
+Blackbird can be used in node, in the browser per script tag and as an AMD
+module.
 
 Follow [@AronKornhall](http://twitter.com/AronKornhall) for news and updates
 regarding this library.
@@ -56,16 +64,7 @@ regarding this library.
 The embedding iframe exposes a method getName
 
     // Define a transport
-    var transport = {
-      send: function(data){
-        window.parent.postMessage(data, '*');
-      },
-      listen: function(fn){
-        window.addEventListener('message', function(e) {
-          fn(e.data);
-        });
-      }
-    };
+    var transport = blackbird.transports.iframe(window.parent);
 
     // Inbound interface (will be called from remote)
     var inbound = {
@@ -83,16 +82,7 @@ The embedded iframe calls getName on embedding iframe
     var iframe = document.getElementById('iframe');
 
     // Define transport
-    var transport = {
-      send: function(data){
-        iframe.contentWindow.postMessage(data, '*');
-      },
-      listen: function(fn){
-        window.addEventListener('message', function(e) {
-          fn(e.data);
-        });
-      }
-    };
+    var transport = blackbird.transports.iframe(iframe.contentWindow);
 
     // Outbound interface (will be proxied to remote end)
     var outbound = {
@@ -143,6 +133,22 @@ __Arguments__
         listen(fn)
             fn {Function} registers fn as a listener for remote messages. fn accepts
                           a single {String} as input parameter
+
+---------
+
+    blackbird.transports.iframe(targetWindow, sourceWindow, domain)
+
+Shorthand for creating an iframe transport from `sourceWindow` to
+`targetWindow`. `domain` is a domain mask that can be used to limit to
+which domains messages can be sent.
+
+__Arguments__
+ 
+    targetWindow   {Object} the window to which we should send outgoing messages. To send messages to an embedded iframe use iframe.contentWindow (where iframe is the dom iframe element). To send data to the embedding (host) window of an embedded iframe as a target, use window.parent
+ 
+    sourceWindow   {Object} the window on which we should listen for incoming messages. Defaults to the global window.
+ 
+    domain  {String} the domain mask. Can be used to limit to which domains messages are sent. Defaults to '*' meaning any domain.
 
 ##License 
 
