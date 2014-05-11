@@ -91,6 +91,27 @@ describe('Promises', function () {
     });
   });
 
+  it('rejects promise without content', function(done) {
+    var targetItf = {
+      fn1: function(){
+        return new Promise(function(resolve, reject){
+          reject();
+        });
+      }
+    };
+    var sourceItf = {
+      fn1: function(){}
+    };
+
+    blackbird({}, sourceItf, transport);
+    blackbird(targetItf, {}, transport);
+    sourceItf.fn1().then(function(val){
+      done('should be rejected');
+    }, function(err){
+      done();
+    });
+  });
+
   it('missing fn should reject promise', function(done) {
     var targetItf = {
     };

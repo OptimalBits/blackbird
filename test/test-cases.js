@@ -73,6 +73,27 @@ module.exports = function(transport){
       });
     });
 
+    it('callback is called after remote nack', function(done) {
+      var called = false;
+      var targetItf = {
+        fn: function(cb){
+          called = true;
+          cb('error');
+        }
+      };
+      var sourceItf = {
+        fn: function(){}
+      };
+
+      blackbird({}, sourceItf, transport);
+      blackbird(targetItf, {}, transport);
+      sourceItf.fn(function(err){
+        called.should.equal(true);
+        err.should.equal('error');
+        done();
+      });
+    });
+
     it('callback with one arg', function(done) {
       var targetItf = {
         fn: function(cb){
