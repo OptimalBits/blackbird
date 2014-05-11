@@ -1,6 +1,6 @@
 {
   "name": "blackbird",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Confortable interfacing of event based transports",
   "main": "lib/blackbird.js",
   "keywords": [
