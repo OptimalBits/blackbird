@@ -60,8 +60,8 @@ Follow [@AronKornhall](http://twitter.com/AronKornhall) for news and updates
 regarding this library.
 
 ##Example (iframe postMessage)
-###Embedding iframe
-The embedding iframe exposes a method getName
+###Embedded iframe
+The embedded iframe exposes a method getName
 
     // Define a transport
     var transport = blackbird.transports.iframe(window.parent);
@@ -76,8 +76,8 @@ The embedding iframe exposes a method getName
     // Setup blackbird
     blackbird(inbound, {}, transport);
 
-###Embedded iframe
-The embedded iframe calls getName on embedding iframe
+###Embedding iframe
+The embedding iframe calls getName on embedded iframe
 
     var iframe = document.getElementById('iframe');
 
